@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f in data/words/*.json)",
+      "Bash(do echo \"==$f==\")",
+      "Read(//c/Users/paula/source/repos/impostor-game/**)",
+      "Bash(done)"
+    ]
+  }
+}
