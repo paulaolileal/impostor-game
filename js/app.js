@@ -1,12 +1,68 @@
 'use strict';
 
 // ============================================================
+// Embedded Data (avoids CORS issues when opened via file://)
+// ============================================================
+const CATEGORIES_DATA = [
+  { id: 'filmes',             name: 'Filmes',                        words: ["Titanic","Vingadores","O Rei Leão","Matrix","Forrest Gump","Parasita","Coringa","Harry Potter","Star Wars","Exterminador do Futuro","Jurassic Park","O Poderoso Chefão"] },
+  { id: 'series',             name: 'Séries',                        words: ["Breaking Bad","Game of Thrones","Stranger Things","Friends","La Casa de Papel","The Office","Peaky Blinders","Dark","Narcos","Chernobyl","Squid Game","Black Mirror"] },
+  { id: 'videogames',         name: 'Videogames',                    words: ["Minecraft","GTA V","Fortnite","The Last of Us","Red Dead Redemption","God of War","Zelda","FIFA","Call of Duty","Cyberpunk 2077","Elden Ring","Among Us"] },
+  { id: 'musicas',            name: 'Músicas',                       words: ["Bohemian Rhapsody","Thriller","Shape of You","Despacito","Blinding Lights","Rolling in the Deep","Smells Like Teen Spirit","Hotel California","Imagine","Baby Shark","Gangnam Style","Perfect"] },
+  { id: 'artistas',           name: 'Artistas e Bandas',             words: ["Beatles","Michael Jackson","Madonna","Taylor Swift","Beyoncé","Led Zeppelin","Rihanna","Queen","Eminem","Anitta","Ivete Sangalo","Gusttavo Lima"] },
+  { id: 'comidas',            name: 'Comidas',                       words: ["Pizza","Hambúrguer","Sushi","Churrasco","Feijoada","Brigadeiro","Lasanha","Hot Dog","Tapioca","Coxinha","Pão de Queijo","Frango Grelhado"] },
+  { id: 'bebidas',            name: 'Bebidas',                       words: ["Coca-Cola","Suco de Laranja","Cerveja","Caipirinha","Café","Chá Verde","Água de Coco","Vinho","Energético","Leite","Limonada","Guaraná"] },
+  { id: 'esportes',           name: 'Esportes',                      words: ["Futebol","Basquete","Tênis","Vôlei","Natação","Boxe","Fórmula 1","Surfe","Judô","Atletismo","Ciclismo","Rugby"] },
+  { id: 'paises',             name: 'Países',                        words: ["Brasil","Estados Unidos","França","Japão","Alemanha","Itália","Argentina","Portugal","Austrália","China","Índia","México"] },
+  { id: 'cidades-br',         name: 'Cidades Brasileiras',           words: ["São Paulo","Rio de Janeiro","Brasília","Salvador","Fortaleza","Manaus","Curitiba","Recife","Porto Alegre","Goiânia","Florianópolis","Belém"] },
+  { id: 'animais',            name: 'Animais',                       words: ["Elefante","Leão","Golfinho","Cobra","Águia","Gorila","Pinguim","Tubarão","Borboleta","Lobo","Tartaruga","Camelo"] },
+  { id: 'profissoes',         name: 'Profissões',                    words: ["Médico","Engenheiro","Advogado","Professor","Bombeiro","Astronauta","Chef de Cozinha","Piloto","Arquiteto","Psicólogo","Veterinário","Policial"] },
+  { id: 'herois-marvel',      name: 'Heróis Marvel',                 words: ["Homem-Aranha","Capitão América","Iron Man","Thor","Hulk","Viúva Negra","Pantera Negra","Doutor Estranho","Gavião Arqueiro","Visão","Capitã Marvel","Shang-Chi"] },
+  { id: 'herois-dc',          name: 'Heróis DC',                     words: ["Batman","Superman","Mulher-Maravilha","Flash","Aquaman","Lanterna Verde","Shazam","Cyborg","Arlequina","Supergirl","Atom","Martian Manhunter"] },
+  { id: 'viloes',             name: 'Vilões',                        words: ["Coringa","Thanos","Darth Vader","Voldemort","Magneto","Joker","Lex Luthor","Malévola","Ursula","Lúcifer","Freddy Krueger","Jason Voorhees"] },
+  { id: 'anime',              name: 'Personagens de Anime',          words: ["Naruto","Goku","Luffy","Sasuke","Light Yagami","Levi","Totoro","Pikachu","Vegeta","Ichigo","Asuka","Saitama"] },
+  { id: 'marcas',             name: 'Marcas Famosas',                words: ["Apple","Nike","Coca-Cola","McDonald's","Google","Amazon","Samsung","Tesla","Adidas","Louis Vuitton","Ferrari","LEGO"] },
+  { id: 'redes-sociais',      name: 'Redes Sociais',                 words: ["Instagram","TikTok","Facebook","Twitter/X","YouTube","WhatsApp","Snapchat","LinkedIn","Pinterest","Reddit","Telegram","Discord"] },
+  { id: 'apps',               name: 'Aplicativos',                   words: ["Uber","iFood","Spotify","Netflix","Google Maps","Duolingo","Shazam","Tinder","Airbnb","PayPal","Zoom","Canva"] },
+  { id: 'carros',             name: 'Carros',                        words: ["Ferrari","Lamborghini","Porsche","BMW","Mustang","Fusca","Gol","Civic","Corsa","Onix","Hilux","Jeep Renegade"] },
+  { id: 'celebridades',       name: 'Celebridades Mundiais',         words: ["Elon Musk","Cristiano Ronaldo","Lady Gaga","Ariana Grande","The Rock","Kylie Jenner","Ed Sheeran","Zendaya","Ryan Reynolds","Billie Eilish","LeBron James","Selena Gomez"] },
+  { id: 'youtubers-br',       name: 'Youtubers Brasileiros',         words: ["Felipe Neto","Whindersson Nunes","Rezendeevil","Authentic Games","Manual do Mundo","Porta dos Fundos","PC Siqueira","Galo Frito","Legends of Gaming Brasil","Julieta Joga","Deive Leonardo","Nando Moura"] },
+  { id: 'doces',              name: 'Doces e Sobremesas',            words: ["Brigadeiro","Mousse de Chocolate","Pudim","Sorvete","Bolo de Cenoura","Churros","Tiramisu","Cheesecake","Brownie","Crepe","Macaroon","Waffle"] },
+  { id: 'frutas',             name: 'Frutas',                        words: ["Manga","Abacaxi","Morango","Uva","Melancia","Maçã","Banana","Pera","Kiwi","Coco","Maracujá","Goiaba"] },
+  { id: 'legumes',            name: 'Legumes e Verduras',            words: ["Cenoura","Batata","Tomate","Brócolis","Cebola","Alho","Pimentão","Abobrinha","Berinjela","Espinafre","Beterraba","Pepino"] },
+  { id: 'instrumentos',       name: 'Instrumentos Musicais',         words: ["Guitarra","Piano","Violino","Bateria","Trompete","Saxofone","Flauta","Violão","Baixo","Ukulele","Acordeon","Contrabaixo"] },
+  { id: 'tecnologia',         name: 'Tecnologia e Gadgets',          words: ["Smartphone","Notebook","Smartwatch","Drone","Impressora 3D","VR Headset","Alexa","GPS","Tablet","Webcam","SSD","Roteador"] },
+  { id: 'jogos-tabuleiro',    name: 'Jogos de Tabuleiro',            words: ["Xadrez","Uno","Monopoly","Detetive","Banco Imobiliário","War","Catan","Imagem & Ação","Jogo da Vida","Coup","Jenga","Dixit"] },
+  { id: 'filmes-animacao',    name: 'Filmes de Animação',            words: ["Toy Story","Rei Leão","Shrek","Frozen","Moana","Coco","Encanto","Soul","Ratatouille","Up","Procurando Nemo","Monstros S.A."] },
+  { id: 'series-animacao',    name: 'Séries de Animação',            words: ["Simpsons","South Park","Rick and Morty","Bob Esponja","Futurama","Gravity Falls","Avatar","Steven Universe","Hora de Aventura","Teen Titans","Rugrats","Dexter's Lab"] },
+  { id: 'fast-food',          name: 'Redes de Fast Food',            words: ["McDonald's","Burger King","Subway","KFC","Domino's","Bob's","Giraffas","Habib's","Pizza Hut","Popeyes","Five Guys","Taco Bell"] },
+  { id: 'esportes-olimpicos', name: 'Esportes Olímpicos',            words: ["Natação","Atletismo","Ginástica","Judô","Esgrima","Hipismo","Remo","Vela","Tiro com Arco","Halterofilismo","Luta Greco-Romana","Ciclismo de Pista"] },
+  { id: 'harry-potter',       name: 'Personagens de Harry Potter',   words: ["Harry Potter","Hermione Granger","Ron Weasley","Albus Dumbledore","Voldemort","Severus Snape","Draco Malfoy","Rúbio Hagrid","Sirius Black","Bellatrix Lestrange","Neville Longbottom","Luna Lovegood"] },
+  { id: 'star-wars',          name: 'Personagens de Star Wars',      words: ["Luke Skywalker","Darth Vader","Han Solo","Princesa Leia","Yoda","Obi-Wan Kenobi","Rey","Kylo Ren","Grogu","Darth Maul","Padmé Amidala","Qui-Gon Jinn"] },
+  { id: 'memes',              name: 'Memes Famosos',                 words: ["Distracted Boyfriend","Doge","Harambe","Hide the Pain Harold","This is Fine","Trollface","Caixão da Gana","Chico Bento Meditando","Tá com medo de quê?","Me Leaving","Giga Chad","Woman Yelling at Cat"] },
+  { id: 'streamers-br',       name: 'Streamers Brasileiros',         words: ["Gaules","Loud Coringa","Alanzoka","Casimiro","Cellbit","Nobru","Zerator","Jukes","LOUD Thurzin","Maateus","Felps","yoDa"] },
+  { id: 'superpoderes',       name: 'Superpoderes',                  words: ["Telepatia","Invisibilidade","Telecinese","Super Força","Voar","Super Velocidade","Controlar o Tempo","Teletransporte","Regeneração","Controlar o Clima","Raio Laser","Elasticidade"] },
+  { id: 'disney',             name: 'Personagens Disney',            words: ["Mickey Mouse","Cinderela","Simba","Ariel","Moana","Elsa","Rapunzel","Buzz Lightyear","Woody","Aladdin","Jasmine","Bela"] },
+  { id: 'podcasts',           name: 'Podcasts',                      words: ["Flow","NerdCast","Inteligência Ltda","Café da Manhã","Mano a Mano","Podpah","Xadrez Verbal","Naruhodo","Ticaracaticast","Praia dos Ossos","Anticast","B9"] },
+  { id: 'influencers-br',     name: 'Influencers Brasileiras/os',    words: ["Virgínia Fonseca","Bruna Marquezine","Jade Picon","Maisa Silva","Larissa Manoela","Manu Gavassi","Camila Queiroz","Juliette","Pocah","Sabrina Sato","Bianca Andrade","Gkay"] },
+  { id: 'consoles',           name: 'Consoles de Videogame',         words: ["PlayStation 5","Xbox Series X","Nintendo Switch","PlayStation 4","Atari","Nintendo 64","Game Boy","Mega Drive","Dreamcast","GameCube","Wii","PlayStation 2"] },
+  { id: 'game-of-thrones',    name: 'Personagens de Game of Thrones',words: ["Jon Snow","Daenerys Targaryen","Tyrion Lannister","Cersei Lannister","Arya Stark","Sansa Stark","Ned Stark","Jaime Lannister","Brienne de Tarth","Joffrey Baratheon","Melisandre","Varys"] },
+  { id: 'series-br',          name: 'Séries Brasileiras',            words: ["Chiquititas","Malhação","Avenida Brasil","O Clone","Rebelde","3%","Dois Irmãos","Amor de Mãe","Pedaço de Mim","Round 6 Brasil","Pantanal","Mulheres Apaixonadas"] },
+  { id: 'esportes-radicais',  name: 'Esportes Radicais',             words: ["Skate","Snowboard","Paraquedismo","Bungee Jump","Escalada","Surfe de Ondas Grandes","Base Jump","Wingsuit","Motocross","Kitesurf","Rapel","Parkour"] },
+  { id: 'culinaria-mundial',  name: 'Culinária Mundial',             words: ["Sushi","Paella","Curry","Croissant","Kebab","Tacos","Dim Sum","Risotto","Pho","Hummus","Ceviche","Moussaka"] },
+  { id: 'monumentos',         name: 'Monumentos e Pontos Turísticos',words: ["Torre Eiffel","Cristo Redentor","Machu Picchu","Coliseu","Grande Muralha da China","Taj Mahal","Estátua da Liberdade","Stonehenge","Pirâmides do Egito","Big Ben","Opera de Sydney","Petra"] },
+  { id: 'series-netflix',     name: 'Séries Netflix',                words: ["Stranger Things","Ozark","The Crown","Bridgerton","Lupin","Squid Game","Emily em Paris","Narcos","Dark","You","Mindhunter","Sex Education"] },
+  { id: 'personagens-games',  name: 'Personagens de Videogames',     words: ["Mario","Sonic","Master Chief","Kratos","Lara Croft","Nathan Drake","Geralt de Rívia","Arthur Morgan","Joel Miller","Link","Cloud Strife","Solid Snake"] },
+  { id: 'atletas-br',         name: 'Atletas Brasileiros',           words: ["Pelé","Ayrton Senna","Gustavo Borges","Daiane dos Santos","Marta","Neymar","Rodrigo Pessoa","Hortência","Oscar Schmidt","Cesar Cielo","Ana Paula Connelly","Adhemar Ferreira"] },
+  { id: 'decada-2000',        name: 'Anos 2000 (Nostalgia)',          words: ["MSN Messenger","Orkut","Tamagotchi","Motorola Razr","iPod","Pendrive","DVD","LAN House","Chiquititas","Power Rangers","Giga Pet","Nokia Tijolão"] },
+];
+
+// ============================================================
 // State
 // ============================================================
 const state = {
   players: [],
   order: [],            // shuffled player indices for reveal phase
-  currentOrderIndex: 0, // position in `order` during reveal phase
+  currentOrderIndex: 0,
   impostorIndex: null,  // index into state.players
   firstPlayerIndex: null,
   category: null,       // { id, name }
@@ -31,17 +87,17 @@ const btnStartGame     = document.getElementById('btn-start-game');
 const playersHint      = document.getElementById('players-hint');
 const btnBackHome      = document.getElementById('btn-back-home');
 
-const revealPlayerName      = document.getElementById('reveal-player-name');
-const revealWaiting         = document.getElementById('reveal-waiting');
-const btnReveal             = document.getElementById('btn-reveal');
-const revealResult          = document.getElementById('reveal-result');
-const revealImpostorCard    = document.getElementById('reveal-impostor-card');
-const revealWordCard        = document.getElementById('reveal-word-card');
+const revealPlayerName       = document.getElementById('reveal-player-name');
+const revealWaiting          = document.getElementById('reveal-waiting');
+const btnReveal              = document.getElementById('btn-reveal');
+const revealResult           = document.getElementById('reveal-result');
+const revealImpostorCard     = document.getElementById('reveal-impostor-card');
+const revealWordCard         = document.getElementById('reveal-word-card');
 const revealCategoryImpostor = document.getElementById('reveal-category-impostor');
-const revealCategoryWord    = document.getElementById('reveal-category-word');
-const revealWord            = document.getElementById('reveal-word');
-const btnNextPlayer         = document.getElementById('btn-next-player');
-const btnNextLabel          = document.getElementById('btn-next-label');
+const revealCategoryWord     = document.getElementById('reveal-category-word');
+const revealWord             = document.getElementById('reveal-word');
+const btnNextPlayer          = document.getElementById('btn-next-player');
+const btnNextLabel           = document.getElementById('btn-next-label');
 
 const resultFirstPlayer = document.getElementById('result-first-player');
 const resultOrderList   = document.getElementById('result-order-list');
@@ -111,55 +167,36 @@ function renderPlayerList() {
 // ============================================================
 // Game Initialization
 // ============================================================
-async function startGame() {
+function startGame() {
   if (state.players.length < 3) return;
 
-  try {
-    const { category, word } = await loadRandomCategoryAndWord();
-    state.category = category;
-    state.word = word;
+  const { category, word } = pickRandomCategoryAndWord();
+  state.category = category;
+  state.word = word;
 
-    const playerCount = state.players.length;
+  const playerCount = state.players.length;
 
-    // Shuffle player order for the reveal phase
-    state.order = shuffle([...Array(playerCount).keys()]);
-    state.currentOrderIndex = 0;
+  state.order = shuffle([...Array(playerCount).keys()]);
+  state.currentOrderIndex = 0;
 
-    // Pick impostor (random player index)
-    state.impostorIndex = state.players.indexOf(
-      state.players[Math.floor(Math.random() * playerCount)]
-    );
-    state.impostorIndex = Math.floor(Math.random() * playerCount);
+  state.impostorIndex = Math.floor(Math.random() * playerCount);
 
-    // Pick first player (random non-impostor)
-    const nonImpostors = state.players
-      .map((_, i) => i)
-      .filter(i => i !== state.impostorIndex);
-    state.firstPlayerIndex = nonImpostors[Math.floor(Math.random() * nonImpostors.length)];
+  const nonImpostors = state.players
+    .map((_, i) => i)
+    .filter(i => i !== state.impostorIndex);
+  state.firstPlayerIndex = nonImpostors[Math.floor(Math.random() * nonImpostors.length)];
 
-    state.revealed = false;
-    showRevealScreen();
-  } catch (err) {
-    console.error(err);
-    showToast('Erro ao carregar as palavras. Tente novamente.');
-  }
+  state.revealed = false;
+  showRevealScreen();
 }
 
 // ============================================================
-// Data Loading
+// Data Selection (inline — no fetch needed)
 // ============================================================
-async function loadRandomCategoryAndWord() {
-  const categories = await fetch('data/categories.json').then(r => {
-    if (!r.ok) throw new Error('categories.json não encontrado');
-    return r.json();
-  });
-  const cat = categories[Math.floor(Math.random() * categories.length)];
-  const words = await fetch(`data/words/${cat.id}.json`).then(r => {
-    if (!r.ok) throw new Error(`data/words/${cat.id}.json não encontrado`);
-    return r.json();
-  });
-  const word = words[Math.floor(Math.random() * words.length)];
-  return { category: cat, word };
+function pickRandomCategoryAndWord() {
+  const cat = CATEGORIES_DATA[Math.floor(Math.random() * CATEGORIES_DATA.length)];
+  const word = cat.words[Math.floor(Math.random() * cat.words.length)];
+  return { category: { id: cat.id, name: cat.name }, word };
 }
 
 // ============================================================
@@ -169,7 +206,6 @@ function showRevealScreen() {
   const playerIndex = state.order[state.currentOrderIndex];
   revealPlayerName.textContent = state.players[playerIndex];
 
-  // Reset reveal UI
   revealWaiting.classList.remove('d-none');
   revealResult.classList.add('d-none');
   revealImpostorCard.classList.add('d-none');
@@ -200,7 +236,6 @@ function revealForCurrentPlayer() {
     revealWordCard.classList.remove('d-none');
   }
 
-  // Delay button appearance to prevent accidental taps
   setTimeout(() => {
     btnNextPlayer.classList.remove('d-none');
     btnNextLabel.textContent = isLastPlayer ? 'Ver Resultado' : 'Próximo Jogador';
@@ -220,14 +255,11 @@ function nextPlayer() {
 // Result Phase
 // ============================================================
 function showResult() {
-  const firstName = state.players[state.firstPlayerIndex];
-  resultFirstPlayer.textContent = firstName;
+  resultFirstPlayer.textContent = state.players[state.firstPlayerIndex];
 
-  // Build ordered list starting from firstPlayerIndex (among non-impostors first, then impostor last)
-  const orderedByFirst = buildOrderedList();
-
+  const orderedList = buildOrderedList();
   resultOrderList.innerHTML = '';
-  orderedByFirst.forEach((playerIdx, pos) => {
+  orderedList.forEach((playerIdx, pos) => {
     const li = document.createElement('li');
     li.className = 'result-order-item';
     const isImpostor = playerIdx === state.impostorIndex;
@@ -243,7 +275,6 @@ function showResult() {
 }
 
 function buildOrderedList() {
-  // Start from firstPlayer, go around the circle, impostor at the end
   const total = state.players.length;
   const nonImpostors = [];
   const start = state.firstPlayerIndex;
@@ -294,11 +325,8 @@ function escapeHtml(text) {
 // ============================================================
 // Event Listeners
 // ============================================================
-
-// Home
 document.getElementById('btn-start').addEventListener('click', () => showScreen('players'));
 
-// Players screen
 btnBackHome.addEventListener('click', () => showScreen('home'));
 
 btnAddPlayer.addEventListener('click', () => {
@@ -321,9 +349,7 @@ playerList.addEventListener('click', e => {
 
 btnStartGame.addEventListener('click', startGame);
 
-// Reveal screen
 btnReveal.addEventListener('click', revealForCurrentPlayer);
 btnNextPlayer.addEventListener('click', nextPlayer);
 
-// Result screen
 btnRestart.addEventListener('click', restart);
