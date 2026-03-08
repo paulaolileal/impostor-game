@@ -236,6 +236,7 @@ function revealForCurrentPlayer() {
     revealWordCard.classList.remove('d-none');
   }
 
+
   setTimeout(() => {
     btnNextPlayer.classList.remove('d-none');
     btnNextLabel.textContent = isLastPlayer ? 'Ver Resultado' : 'Próximo Jogador';
@@ -266,7 +267,6 @@ function showResult() {
     li.innerHTML = `
       <span class="result-order-num">${pos + 1}</span>
       <span>${escapeHtml(state.players[playerIdx])}</span>
-      ${isImpostor ? '<span class="result-impostor-badge"><i class="fa-solid fa-skull me-1"></i>Impostor</span>' : ''}
     `;
     resultOrderList.appendChild(li);
   });
@@ -291,8 +291,18 @@ function buildOrderedList() {
 // ============================================================
 // Restart
 // ============================================================
+function quickRestart() {
+  state.order = [];
+  state.currentOrderIndex = 0;
+  state.impostorIndex = null;
+  state.firstPlayerIndex = null;
+  state.category = null;
+  state.word = null;
+  state.revealed = false;
+  startGame();
+}
+
 function restart() {
-  state.players = [];
   state.order = [];
   state.currentOrderIndex = 0;
   state.impostorIndex = null;
@@ -303,7 +313,7 @@ function restart() {
 
   playerNameInput.value = '';
   renderPlayerList();
-  showScreen('home');
+  showScreen('players');
 }
 
 // ============================================================
@@ -353,3 +363,4 @@ btnReveal.addEventListener('click', revealForCurrentPlayer);
 btnNextPlayer.addEventListener('click', nextPlayer);
 
 btnRestart.addEventListener('click', restart);
+document.getElementById('btn-quick-restart').addEventListener('click', quickRestart);

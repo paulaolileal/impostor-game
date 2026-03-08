@@ -82,9 +82,7 @@
           <i class="fa-solid fa-skull result-icon"></i>
           <div class="result-role">VOCÊ É O</div>
           <div class="result-role-big">IMPOSTOR</div>
-          <div class="result-category">
-            Categoria: <span id="reveal-category-impostor"></span>
-          </div>
+          <div id="reveal-category-impostor" class="result-category"></div>
           <div class="result-hint">Descubra a palavra antes que te peguem!</div>
         </div>
 
@@ -92,9 +90,7 @@
           <i class="fa-solid fa-user result-icon"></i>
           <div class="result-role">A palavra é:</div>
           <div id="reveal-word" class="result-word-big"></div>
-          <div class="result-category">
-            Categoria: <span id="reveal-category-word"></span>
-          </div>
+          <div id="reveal-category-word" class="result-category"></div>
         </div>
 
         <button id="btn-next-player" class="btn btn-danger btn-lg btn-next d-none mt-4">
@@ -117,9 +113,14 @@
       <p class="result-order-label mt-4">Ordem de participação:</p>
       <ol id="result-order-list" class="result-order-list list-unstyled"></ol>
 
-      <button id="btn-restart" class="btn btn-danger btn-lg btn-main mt-4">
-        <i class="fa-solid fa-rotate-left me-2"></i> Reiniciar Partida
-      </button>
+      <div class="d-flex flex-column align-items-center gap-3 mt-4">
+        <button id="btn-quick-restart" class="btn btn-danger btn-lg btn-main">
+          <i class="fa-solid fa-bolt me-2"></i> Jogar de Novo
+        </button>
+        <button id="btn-restart" class="btn btn-outline-secondary">
+          <i class="fa-solid fa-rotate-left me-2"></i> Gerenciar Jogadores
+        </button>
+      </div>
     </div>
   </div>
 
