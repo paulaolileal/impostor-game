@@ -456,21 +456,35 @@ html, body {
   border-color: var(--border);
 }
 
-.category-check {
-  font-size: 0.7rem;
+.category-icon {
+  font-size: 0.85rem;
   color: var(--accent);
-  min-width: 0.75rem;
+  min-width: 1rem;
   text-align: center;
+  flex-shrink: 0;
 }
 
-.category-item.disabled .category-check {
-  visibility: hidden;
+.category-item.disabled .category-icon {
+  color: var(--text-muted);
 }
 
 .category-name {
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.3;
+  flex: 1;
+}
+
+.category-check {
+  font-size: 0.7rem;
+  color: var(--accent);
+  min-width: 0.75rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.category-item.disabled .category-check {
+  visibility: hidden;
 }
 
 /* ============================

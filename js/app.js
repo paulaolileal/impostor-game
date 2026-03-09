@@ -292,6 +292,59 @@ function buildOrderedList() {
 // ============================================================
 // Categories Screen
 // ============================================================
+const CATEGORY_ICONS = {
+  'filmes':             'fa-film',
+  'series':             'fa-tv',
+  'videogames':         'fa-gamepad',
+  'musicas':            'fa-music',
+  'artistas':           'fa-guitar',
+  'comidas':            'fa-utensils',
+  'bebidas':            'fa-wine-glass',
+  'esportes':           'fa-futbol',
+  'paises':             'fa-earth-americas',
+  'cidades-br':         'fa-city',
+  'animais':            'fa-paw',
+  'profissoes':         'fa-briefcase',
+  'herois-marvel':      'fa-spider',
+  'herois-dc':          'fa-bolt',
+  'viloes':             'fa-skull-crossbones',
+  'anime':              'fa-star',
+  'marcas':             'fa-tag',
+  'redes-sociais':      'fa-hashtag',
+  'apps':               'fa-mobile-screen',
+  'carros':             'fa-car',
+  'celebridades':       'fa-camera',
+  'youtubers-br':       'fa-youtube',
+  'doces':              'fa-candy-cane',
+  'frutas':             'fa-apple-whole',
+  'legumes':            'fa-leaf',
+  'instrumentos':       'fa-drum',
+  'tecnologia':         'fa-microchip',
+  'jogos-tabuleiro':    'fa-chess',
+  'filmes-animacao':    'fa-wand-magic-sparkles',
+  'series-animacao':    'fa-clapperboard',
+  'fast-food':          'fa-burger',
+  'esportes-olimpicos': 'fa-medal',
+  'harry-potter':       'fa-hat-wizard',
+  'star-wars':          'fa-jedi',
+  'memes':              'fa-face-laugh-squint',
+  'streamers-br':       'fa-tower-broadcast',
+  'superpoderes':       'fa-hand-fist',
+  'disney':             'fa-castle',
+  'podcasts':           'fa-microphone',
+  'influencers-br':     'fa-heart',
+  'consoles':           'fa-plug',
+  'game-of-thrones':    'fa-crown',
+  'series-br':          'fa-satellite-dish',
+  'esportes-radicais':  'fa-person-skiing',
+  'culinaria-mundial':  'fa-bowl-food',
+  'monumentos':         'fa-landmark',
+  'series-netflix':     'fa-n',
+  'personagens-games':  'fa-sword',
+  'atletas-br':         'fa-trophy',
+  'decada-2000':        'fa-compact-disc',
+};
+
 function renderCategoriesScreen() {
   const list = document.getElementById('categories-list');
   list.innerHTML = '';
@@ -301,9 +354,11 @@ function renderCategoriesScreen() {
     const item = document.createElement('div');
     item.className = 'category-item' + (enabled ? '' : ' disabled');
     item.dataset.id = cat.id;
+    const icon = CATEGORY_ICONS[cat.id] || 'fa-list';
     item.innerHTML = `
-      <span class="category-check"><i class="fa-solid fa-check"></i></span>
+      <i class="fa-solid ${icon} category-icon"></i>
       <span class="category-name">${escapeHtml(cat.name)}</span>
+      <span class="category-check"><i class="fa-solid fa-check"></i></span>
     `;
     list.appendChild(item);
   });
