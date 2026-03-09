@@ -24,12 +24,36 @@
     </div>
   </div>
 
+  <!-- ========== TELA 5: CATEGORIAS ========== -->
+  <div id="screen-categories" class="screen">
+    <div class="container py-4">
+      <h2 class="screen-title">
+        <i class="fa-solid fa-gear me-2"></i> Categorias
+      </h2>
+      <p class="text-muted small mb-3">Desmarque as categorias que não deseja usar.</p>
+      <div id="categories-list" class="categories-grid mb-4"></div>
+      <div class="d-flex justify-content-between align-items-center">
+        <button id="btn-back-from-categories" class="btn btn-outline-secondary">
+          <i class="fa-solid fa-arrow-left me-1"></i> Voltar
+        </button>
+        <button id="btn-select-all" class="btn btn-outline-danger btn-sm">
+          Desmarcar Todas
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ========== TELA 2: CADASTRO DE JOGADORES ========== -->
   <div id="screen-players" class="screen">
     <div class="container py-4">
-      <h2 class="screen-title">
-        <i class="fa-solid fa-users me-2"></i> Jogadores
-      </h2>
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="screen-title mb-0">
+          <i class="fa-solid fa-users me-2"></i> Jogadores
+        </h2>
+        <button id="btn-settings" class="btn-settings" aria-label="Configurações">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
 
       <div class="input-group mb-3">
         <input

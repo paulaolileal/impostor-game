@@ -68,16 +68,18 @@ const state = {
   category: null,       // { id, name }
   word: null,
   revealed: false,
+  disabledCategories: new Set(),
 };
 
 // ============================================================
 // DOM References
 // ============================================================
 const screens = {
-  home:    document.getElementById('screen-home'),
-  players: document.getElementById('screen-players'),
-  reveal:  document.getElementById('screen-reveal'),
-  result:  document.getElementById('screen-result'),
+  home:       document.getElementById('screen-home'),
+  players:    document.getElementById('screen-players'),
+  reveal:     document.getElementById('screen-reveal'),
+  result:     document.getElementById('screen-result'),
+  categories: document.getElementById('screen-categories'),
 };
 
 const playerNameInput  = document.getElementById('input-player-name');
@@ -125,7 +127,7 @@ function showToast(message) {
 // Player management
 // ============================================================
 function addPlayer(name) {
-  const trimmed = name.trim();
+  const trimmed = name.trim().replace(/\b\w/g, c => c.toUpperCase());
   if (!trimmed) return;
   if (state.players.length >= 20) {
     showToast('Máximo de 20 jogadores atingido.');
@@ -194,7 +196,9 @@ function startGame() {
 // Data Selection (inline — no fetch needed)
 // ============================================================
 function pickRandomCategoryAndWord() {
-  const cat = CATEGORIES_DATA[Math.floor(Math.random() * CATEGORIES_DATA.length)];
+  const active = CATEGORIES_DATA.filter(c => !state.disabledCategories.has(c.id));
+  const pool = active.length > 0 ? active : CATEGORIES_DATA;
+  const cat = pool[Math.floor(Math.random() * pool.length)];
   const word = cat.words[Math.floor(Math.random() * cat.words.length)];
   return { category: { id: cat.id, name: cat.name }, word };
 }
@@ -276,16 +280,57 @@ function showResult() {
 
 function buildOrderedList() {
   const total = state.players.length;
-  const nonImpostors = [];
   const start = state.firstPlayerIndex;
+  const ordered = [];
 
   for (let i = 0; i < total; i++) {
-    const idx = (start + i) % total;
-    if (idx !== state.impostorIndex) {
-      nonImpostors.push(idx);
-    }
+    ordered.push((start + i) % total);
   }
-  return [...nonImpostors, state.impostorIndex];
+  return ordered;
+}
+
+// ============================================================
+// Categories Screen
+// ============================================================
+function renderCategoriesScreen() {
+  const list = document.getElementById('categories-list');
+  list.innerHTML = '';
+
+  CATEGORIES_DATA.forEach(cat => {
+    const enabled = !state.disabledCategories.has(cat.id);
+    const item = document.createElement('div');
+    item.className = 'category-item' + (enabled ? '' : ' disabled');
+    item.dataset.id = cat.id;
+    item.innerHTML = `
+      <span class="category-check"><i class="fa-solid fa-check"></i></span>
+      <span class="category-name">${escapeHtml(cat.name)}</span>
+    `;
+    list.appendChild(item);
+  });
+
+  updateSelectAllBtn();
+}
+
+function toggleCategory(id) {
+  if (state.disabledCategories.has(id)) {
+    state.disabledCategories.delete(id);
+  } else {
+    const enabledCount = CATEGORIES_DATA.length - state.disabledCategories.size;
+    if (enabledCount <= 1) {
+      showToast('Pelo menos uma categoria deve estar ativa.');
+      return;
+    }
+    state.disabledCategories.add(id);
+  }
+  const item = document.querySelector(`.category-item[data-id="${id}"]`);
+  if (item) item.classList.toggle('disabled');
+  updateSelectAllBtn();
+}
+
+function updateSelectAllBtn() {
+  const btn = document.getElementById('btn-select-all');
+  const allEnabled = state.disabledCategories.size === 0;
+  btn.textContent = allEnabled ? 'Desmarcar Todas' : 'Marcar Todas';
 }
 
 // ============================================================
@@ -364,3 +409,26 @@ btnNextPlayer.addEventListener('click', nextPlayer);
 
 btnRestart.addEventListener('click', restart);
 document.getElementById('btn-quick-restart').addEventListener('click', quickRestart);
+
+document.getElementById('btn-settings').addEventListener('click', () => {
+  renderCategoriesScreen();
+  showScreen('categories');
+});
+
+document.getElementById('btn-back-from-categories').addEventListener('click', () => showScreen('players'));
+
+document.getElementById('categories-list').addEventListener('click', e => {
+  const item = e.target.closest('.category-item');
+  if (item) toggleCategory(item.dataset.id);
+});
+
+document.getElementById('btn-select-all').addEventListener('click', () => {
+  const allEnabled = state.disabledCategories.size === 0;
+  if (allEnabled) {
+    // desmarcar todas exceto a primeira
+    CATEGORIES_DATA.forEach((cat, i) => { if (i > 0) state.disabledCategories.add(cat.id); });
+  } else {
+    state.disabledCategories.clear();
+  }
+  renderCategoriesScreen();
+});
