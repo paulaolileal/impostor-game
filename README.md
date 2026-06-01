@@ -1,5 +1,10 @@
 # 💀 Impostor
 
+[![Jogue Agora](https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge)](https://paulaolileal.github.io/impostor-game/)
+![PWA](https://img.shields.io/badge/PWA-ready-5A0FC8?style=flat&logo=pwa)
+![Offline](https://img.shields.io/badge/Offline-supported-4CAF50?style=flat&logo=googlechrome)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
+
 Jogo de grupo para jogar ao vivo — um jogador é sorteado como **impostor** e não sabe a palavra da rodada. Os demais sabem a mesma palavra. O objetivo é o impostor se disfarçar enquanto o grupo tenta descobrir quem ele é.
 
 > SPA estática (HTML + CSS + JS puro) — funciona direto no browser, sem instalação.
