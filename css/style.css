@@ -38,6 +38,14 @@
    ============================ */
 *, *::before, *::after {
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 html, body {
@@ -48,6 +56,12 @@ html, body {
   background-color: var(--bg);
   color: var(--text);
   transition: background-color 0.3s, color 0.3s;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+}
+
+button, .btn, [role="button"] {
+  touch-action: manipulation;
 }
 
 /* ============================

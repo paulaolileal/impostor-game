@@ -1,0 +1,19 @@
+{
+  "name": "Impostor",
+  "short_name": "Impostor",
+  "description": "Quem está mentindo?",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#dc3545",
+  "background_color": "#121212",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
