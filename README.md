@@ -1,9 +1,9 @@
 # 💀 Impostor
 
 [![Jogue Agora](https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge)](https://paulaolileal.github.io/impostor-game/)
-![PWA](https://img.shields.io/badge/PWA-ready-5A0FC8?style=flat&logo=pwa)
-![Offline](https://img.shields.io/badge/Offline-supported-4CAF50?style=flat&logo=googlechrome)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
+![PWA](https://img.shields.io/badge/PWA-ready-5A0FC8?style=for-the-badge&logo=pwa)
+![Offline](https://img.shields.io/badge/Offline-supported-4CAF50?style=for-the-badge&logo=googlechrome)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 Jogo de grupo para jogar ao vivo — um jogador é sorteado como **impostor** e não sabe a palavra da rodada. Os demais sabem a mesma palavra. O objetivo é o impostor se disfarçar enquanto o grupo tenta descobrir quem ele é.
 
@@ -130,5 +130,5 @@ Ou use uma extensão de Live Server no VS Code.
 
 Feito com 💀 por **Paula Leal**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-paulaolileal-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/paulaolileal/)
-[![GitHub](https://img.shields.io/badge/GitHub-paulaolileal-181717?style=flat&logo=github)](https://github.com/paulaolileal/impostor-game)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-paulaolileal-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/paulaolileal/)
+[![GitHub](https://img.shields.io/badge/GitHub-paulaolileal-181717?style=for-the-badge&logo=github)](https://github.com/paulaolileal/impostor-game)
