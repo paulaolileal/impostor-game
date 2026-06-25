@@ -1,6 +1,6 @@
 # 💀 Impostor
 
-[![Jogue Agora](https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge)](https://paulaolileal.github.io/impostor-game/)
+[![Jogue Agora](https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge)](https://impostor.lealtek.com)
 ![PWA](https://img.shields.io/badge/PWA-ready-5A0FC8?style=for-the-badge&logo=pwa)
 ![Offline](https://img.shields.io/badge/Offline-supported-4CAF50?style=for-the-badge&logo=googlechrome)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
