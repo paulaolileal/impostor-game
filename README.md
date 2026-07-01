@@ -1,15 +1,41 @@
 # 💀 Impostor
 
-[![Jogue Agora](https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge)](https://impostor.lealtek.com)
-![PWA](https://img.shields.io/badge/PWA-ready-5A0FC8?style=for-the-badge&logo=pwa)
-![Offline](https://img.shields.io/badge/Offline-supported-4CAF50?style=for-the-badge&logo=googlechrome)
-![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+<p align="center">
+  <img src="docs/images/impostor-logo-square.png" alt="Impostor Logo" width="110">
+</p>
+
+<p align="center">
+  <a href="https://impostor.lealtek.com"><img src="https://img.shields.io/badge/Jogue%20Agora-💀%20Impostor-black?style=for-the-badge" alt="Jogue Agora"></a>
+  <img src="https://img.shields.io/badge/PWA-ready-5A0FC8?style=for-the-badge&logo=pwa" alt="PWA">
+  <img src="https://img.shields.io/badge/Offline-supported-4CAF50?style=for-the-badge&logo=googlechrome" alt="Offline">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License">
+</p>
 
 Jogo de grupo para jogar ao vivo — um jogador é sorteado como **impostor** e não sabe a palavra da rodada. Os demais sabem a mesma palavra. O objetivo é o impostor se disfarçar enquanto o grupo tenta descobrir quem ele é.
 
 > SPA estática (HTML + CSS + JS puro) — funciona direto no browser, sem instalação.
 
-🔗 **[Jogar agora](https://paulaolileal.github.io/impostor-game)**
+🔗 **[Jogar agora](https://impostor.lealtek.com)**
+
+---
+
+## Capturas de Tela
+
+<p align="center">
+  <img src="docs/images/imp-home.png" alt="Tela inicial" width="200">
+  &nbsp;&nbsp;
+  <img src="docs/images/imp-players.png" alt="Cadastro de jogadores" width="200">
+  &nbsp;&nbsp;
+  <img src="docs/images/imp-palavra-secreta-ocultapng.png" alt="Palavra oculta — aguardando toque" width="200">
+</p>
+
+<p align="center">
+  <img src="docs/images/imp-palavra-secreta-reveladapng.png" alt="Palavra revelada para jogador normal" width="200">
+  &nbsp;&nbsp;
+  <img src="docs/images/imp-palavra-secreta-impostor.png" alt="Tela do impostor" width="200">
+  &nbsp;&nbsp;
+  <img src="docs/images/imp-ordem-jogadores.png" alt="Resultado e ordem de participação" width="200">
+</p>
 
 ---
 
